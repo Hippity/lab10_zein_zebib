@@ -28,11 +28,25 @@ pipeline {
                 }
             }
         }
+        stage('Coverage') {
+            steps {
+                script {
+                    sh "source ${VIRTUAL_ENV}/bin/activate && coverage run -m pytest"
+                    sh "source ${VIRTUAL_ENV}/bin/activate && coverage report"
+                }
+            }
+        }
+        stage('Security') {
+            steps {
+                script {
+                    sh "source ${VIRTUAL_ENV}/bin/activate && bandit -r ."
+                }
+            }
+        }
         stage('Deploy') {
             steps {
                 script {
-                    // Deployment logic, e.g., pushing to a remote server
-                    echo "Deploying application..."
+                    sh './deploy.sh'
                 }
             }
         }
