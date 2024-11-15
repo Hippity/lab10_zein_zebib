@@ -2,17 +2,12 @@ pipeline {
     agent any
     environment { 
         VIRTUAL_ENV = 'venv' 
-        IMAGE_NAME = "my-app-image"
-        CONTAINER_NAME = "my-app-container"
-        PORT = 3001
     }
     stages {
         stage('Setup') {
             steps {
                 script {
-                    sh 'chmod +x deploy.sh'
-                    def dockerHome = tool 'myDocker'
-                    env.PATH = "${dockerHome}/bin:${env.PATH}"
+                    // sh 'chmod +x deploy.sh'
                     if (!fileExists("${env.WORKSPACE}/${VIRTUAL_ENV}")) { 
                         sh "python3 -m venv ${VIRTUAL_ENV}"
                     }
@@ -52,16 +47,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    // sh './deploy.sh'
-                    // Stop and remove any existing container with the same name
-                    sh "docker stop ${CONTAINER_NAME} || true"
-                    sh "docker rm ${CONTAINER_NAME} || true"
-                    
-                    // Build the Docker image
-                    sh "docker build -t ${IMAGE_NAME} ."
-                    
-                    // Run the Docker container
-                    sh "docker run -d --name ${CONTAINER_NAME} -p ${PORT}:3001 ${IMAGE_NAME}"
+                    sh './deploy.sh'
                 }
             }
         }
