@@ -11,6 +11,8 @@ pipeline {
             steps {
                 script {
                     sh 'chmod +x deploy.sh'
+                    def dockerHome = tool 'myDocker'
+                    env.PATH = "${dockerHome}/bin:${env.PATH}"
                     if (!fileExists("${env.WORKSPACE}/${VIRTUAL_ENV}")) { 
                         sh "python3 -m venv ${VIRTUAL_ENV}"
                     }
