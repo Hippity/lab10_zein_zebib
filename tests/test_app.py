@@ -1,4 +1,4 @@
-from ..app import greet
+from app import greet
 import unittest
 
 class TestApp(unittest.TestCase):
