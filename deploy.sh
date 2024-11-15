@@ -2,25 +2,16 @@
 
 set -e
 
-APP_NAME="Greet"
 SCRIPT_NAME="app.py"
-VENV_DIR="venv"
+VIRTUAL_ENV="venv"
 
 echo "Starting deployment of $APP_NAME..."
 
-# Create a virtual environment (if it doesn't exist)
-if [ ! -d "$VENV_DIR" ]; then
-    echo "Creating virtual environment..."
-    python3 -m venv $VENV_DIR
-fi
+# Virtual environment already exists with the requirments no need to run pip install or create a new folder
 
 # Activate venv
 echo "Activating virtual environment..."
-source $VENV_DIR/bin/activate
-
-# Install dependencies 
-echo "Installing dependencies..."
-pip install -r requirements.txt
+source $VIRTUAL_ENV/bin/activate
 
 # Run the Python script
 echo "Running $SCRIPT_NAME..."
