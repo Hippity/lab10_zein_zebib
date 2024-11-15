@@ -7,6 +7,7 @@ pipeline {
         stage('Setup') {
             steps {
                 script {
+                    sh 'chmod +x deploy.sh'
                     if (!fileExists("${env.WORKSPACE}/${VIRTUAL_ENV}")) { 
                         sh "python3 -m venv ${VIRTUAL_ENV}"
                     }
