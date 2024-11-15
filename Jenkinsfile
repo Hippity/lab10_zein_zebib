@@ -39,7 +39,7 @@ pipeline {
         stage('Security Scan') {
             steps {
                 script {
-                    sh "source ${VIRTUAL_ENV}/bin/activate && bandit -r ."
+                    sh "source ${VIRTUAL_ENV}/bin/activate && bandit -r . -x ./${VIRTUAL_ENV}"
                 }
             }
         }
